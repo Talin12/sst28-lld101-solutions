@@ -1,4 +1,12 @@
 public abstract class Exporter {
-    // implied "contract" but not enforced (smell)
-    public abstract ExportResult export(ExportRequest req);
+    // Template method: Guarantees consistent null handling for ALL exporters
+    public final ExportResult export(ExportRequest req) {
+        if (req == null) {
+            return new ExportResult(contentType(), new byte[0]);
+        }
+        return doExport(req);
+    }
+    
+    public abstract String contentType();
+    protected abstract ExportResult doExport(ExportRequest req);
 }
