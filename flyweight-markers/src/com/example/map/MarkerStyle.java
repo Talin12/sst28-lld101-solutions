@@ -1,5 +1,7 @@
 package com.example.map;
 
+import java.util.Objects;
+
 /**
  * CURRENT STATE (BROKEN ON PURPOSE):
  * A style object exists, but is mutable and is created per marker,
@@ -10,14 +12,14 @@ package com.example.map;
  */
 public class MarkerStyle {
 
-    private String shape;   // e.g., PIN, CIRCLE, SQUARE
-    private String color;   // e.g., RED, BLUE, GREEN
-    private int size;       // e.g., 10..20
-    private boolean filled; // filled vs outline
+    private final String shape;   // e.g., PIN, CIRCLE, SQUARE
+    private final String color;   // e.g., RED, BLUE, GREEN
+    private final int size;       // e.g., 10..20
+    private final boolean filled; // filled vs outline
 
     public MarkerStyle(String shape, String color, int size, boolean filled) {
-        this.shape = shape;
-        this.color = color;
+        this.shape = Objects.requireNonNull(shape, "shape");
+        this.color = Objects.requireNonNull(color, "color");
         this.size = size;
         this.filled = filled;
     }
@@ -26,12 +28,6 @@ public class MarkerStyle {
     public String getColor() { return color; }
     public int getSize() { return size; }
     public boolean isFilled() { return filled; }
-
-    // BROKEN: setters should go away after immutability refactor
-    public void setShape(String shape) { this.shape = shape; }
-    public void setColor(String color) { this.color = color; }
-    public void setSize(int size) { this.size = size; }
-    public void setFilled(boolean filled) { this.filled = filled; }
 
     @Override
     public String toString() {
